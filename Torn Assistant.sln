@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Torn_Assistant", "Torn_Assistant.csproj", "{27FE1E8E-29C6-4994-8779-27223783EE8D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{27FE1E8E-29C6-4994-8779-27223783EE8D}.Debug|x86.ActiveCfg = Debug|x86
+		{27FE1E8E-29C6-4994-8779-27223783EE8D}.Debug|x86.Build.0 = Debug|x86
+		{27FE1E8E-29C6-4994-8779-27223783EE8D}.Release|x86.ActiveCfg = Release|x86
+		{27FE1E8E-29C6-4994-8779-27223783EE8D}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {451249CF-9B5C-487E-B1F0-033E5AB18998}
+	EndGlobalSection
+EndGlobal
