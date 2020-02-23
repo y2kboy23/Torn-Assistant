@@ -164,9 +164,7 @@ namespace Torn_Assistant.API
             List<JToken> totalItems = populationTornData.apiData.SelectToken("items").Children().Children().ToList<JToken>();
             Items items = new Items(totalItems);
 
-            //method to return sorted profit list
-
-            return await items.createItemsList(vendorList);
+            return await items.createItemsList(vendorList); 
         }
 
         public DateTimeOffset LastUpdated()
@@ -415,7 +413,10 @@ namespace Torn_Assistant.API
             
             foreach (ItemDetails items in totalItems)
             {
-                if(items.type != "Plushie" || items.type != "Flower") { plushieFlowers.Add(items); }
+                if(items.type == "Plushie" || items.type == "Flower") 
+                { 
+                    if (items.buy_price > 0) { plushieFlowers.Add(items); }
+                }
             }
             return plushieFlowers;
         }
