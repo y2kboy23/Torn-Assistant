@@ -8,15 +8,11 @@ namespace Torn_Assistant.API
 {
     public class Items
     {
-        List<JToken> totalItems;
-        List<ItemDetails> totalItemDetails = new List<ItemDetails>();
-        List<ItemDetails> profit = new List<ItemDetails>();
+        List<JToken> totalItems { get; set; }
 
         //Constructor
-        public Items(List<JToken> items)
-        {
-            totalItems = items;
-        }
+        public Items(List<JToken> items) => 
+            (this.totalItems) = (items);
 
         /// <summary>
         /// Returns List if List - (True) Vendor Profit, (False) Market Profit
@@ -24,6 +20,9 @@ namespace Torn_Assistant.API
         /// <returns></returns>
         public async Task<List<ItemDetails>> createItemsList(bool vendorList)
         {
+            List<ItemDetails> totalItemDetails = new List<ItemDetails>();
+            List<ItemDetails> profit = new List<ItemDetails>();
+
             foreach (JToken jToken in totalItems)
             {
                 string itemNumber;
@@ -73,6 +72,29 @@ namespace Torn_Assistant.API
 
             return profit;
         }
+        public ItemDetails GetItemDetails(string name)
+        {
+            JToken item = totalItems.Find(x => x.Value<string>("name") == name);
+            JProperty itemProperty = (JProperty)item.Parent;
+
+            return new ItemDetails 
+            {
+                itemNumber = itemProperty.Name,
+                name = item.Value<string>("name"),
+                description = item.Value<string>("description"),
+                effect = item.Value<string>("effect"),
+                requirement = item.Value<string>("requirement"),
+                type = item.Value<string>("type"),
+                weapon_type = item.Value<string>("weapon_type"),
+                buy_price = item.Value<double>("buy_price"),
+                sell_price = item.Value<double>("sell_price"),
+                market_valuation = item.Value<double>("market_valuation"),
+                circulation = item.Value<double>("circulation"),
+                image = item.Value<string>("image"),
+                vendorProfit = item.Value<double>("sell_price") - item.Value<double>("market_valuation"),
+                marketProfit = item.Value<double>("market_valuation") - item.Value<double>("buy_price")
+            };
+        }
 
     }
 
@@ -113,16 +135,18 @@ namespace Torn_Assistant.API
             marketProfit = idMarketProfit;
         }
 
+        public ItemDetails() { }
+
     }
 
     public class BazaarDetails : IMarketDetails
     {
-        public double itemID { get; }
-        public string itemName { get; }
-        public double vendorProfit { get; }
-        public double bazaarID { get; }
-        public double cost { get; }
-        public double quantity { get; }
+        public double itemID { get; set; }
+        public string itemName { get; set; }
+        public double vendorProfit { get; set; }
+        public double bazaarID { get; set; }
+        public double cost { get; set; }
+        public double quantity { get; set; }
 
         //default constructor
         public BazaarDetails(string _itemID, string _itemName, double _vendorProfit, string jtokenBazarrID, string jtokenCost, string jtokenQuantity)
@@ -140,12 +164,12 @@ namespace Torn_Assistant.API
 
     public class ItemMarketDetails : IMarketDetails
     {
-        public double itemID { get; }
-        public string itemName { get; }
-        public double vendorProfit { get; }
-        public double itemMarketID { get; }
-        public double cost { get; }
-        public double quantity { get; }
+        public double itemID { get; set; }
+        public string itemName { get; set; }
+        public double vendorProfit { get; set; }
+        public double itemMarketID { get; set; }
+        public double cost { get; set; }
+        public double quantity { get; set; }
 
         //default constructor
         public ItemMarketDetails(string _itemID, string _itemName, double _vendorProfit, string jtokenMarketID, string jtokenCost, string jtokenQuantity)
@@ -163,11 +187,11 @@ namespace Torn_Assistant.API
 
     public interface IMarketDetails
     {
-        double itemID { get; }
-        string itemName { get; }
-        double vendorProfit { get; }
-        double cost { get; }
-        double quantity { get; }
+        double itemID { get; set; }
+        string itemName { get; set; }
+        double vendorProfit { get; set; }
+        double cost { get; set; }
+        double quantity { get; set; }
 
     }
 }

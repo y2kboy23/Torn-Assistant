@@ -134,7 +134,7 @@ namespace Torn_Assistant.API
 
         public async Task GetBestGyms()
         {
-            List<JToken> totalGyms = populationTornData.apiData.SelectToken("gyms").Children().Children().ToList<JToken>();
+            List<JToken> totalGyms = populationTornData.apiData.SelectToken("gyms").Values().ToList<JToken>();
 
             Gyms gyms = new Gyms(totalGyms);
             await gyms.getMinMaxGyms(11);
@@ -152,7 +152,7 @@ namespace Torn_Assistant.API
         public async Task<List<ItemDetails>> GetItemsList(bool vendorList)
         {
 
-            List<JToken> totalItems = populationTornData.apiData.SelectToken("items").Children().Children().ToList<JToken>();
+            List<JToken> totalItems = populationTornData.apiData.SelectToken("items").Values().ToList<JToken>();
             Items items = new Items(totalItems);
 
             return await items.createItemsList(vendorList); 
