@@ -33,17 +33,11 @@ namespace Torn_Assistant.API
         //Item Market data
         private protected TornAPISection populationItemMarketData = new TornAPISection();
 
-        public API(string uri, string key)
-        {
-            BaseApiUri = uri;
-            ApiKey = key;
-        }
+        public API(string uri, string key) =>
+            (this.BaseApiUri, this.ApiKey) = (uri, key);
 
-        public async Task UpdateID(string id)
-        {
-            userID = id;
-            return;
-        }
+        public async Task UpdateID(string id) => 
+            (this.userID) = (id);
 
         /// <summary>
         /// Valid Selection: torn, user, property, faction, company, itemmarket
@@ -116,7 +110,7 @@ namespace Torn_Assistant.API
 
         private async Task<string> GetSelections(string section)
         {
-            StringBuilder selection = new StringBuilder();
+            string selectionsString = "";
 
             try
             {
@@ -127,18 +121,15 @@ namespace Torn_Assistant.API
                         )
                     ).SelectToken("selections");
 
-                selection.Clear();
-
-                foreach (string value in selections)
+                foreach (string value in selections.ToList())
                 {
-                    if (value == selections.Last.ToString())
-                        selection.Append(value);
-                    else { selection.Append(value).Append(","); }
+                    if (value != selections.Last.ToString()) { selectionsString += String.Format("{0},", value); }
+                    else { selectionsString += String.Format("{0}", value); }
                 }
             }
-            catch { }
+            catch { selectionsString = String.Empty; }
 
-            return selection.ToString();
+            return selectionsString;
         }
 
         public async Task GetBestGyms()
@@ -259,31 +250,35 @@ namespace Torn_Assistant.API
         {
             string switchData;
 
-            switch (selection)
+            if (selection != null)
             {
-                case "torn":
-                    switchData = String.Format("torn/?selections={0}", await GetSelections("torn"));
-                    break;
-                case "user":
-                    switchData = String.Format("user/?selections={0}", await GetSelections("user"));
-                    break;
-                case "property":
-                    switchData = String.Format("property/?selections={0}", await GetSelections("property"));
-                    break;
-                case "faction":
-                    switchData = String.Format("faction/?selections={0}", await GetSelections("faction"));
-                    break;
-                case "company":
-                    switchData = String.Format("company/?selections={0}", await GetSelections("company"));
-                    break;
-                case "itemmarket":
-                    switchData = String.Format("itemmarket/?selections={0}", await GetSelections("itemmarket"));
-                    break;
-                default:
-                    switchData = String.Empty;
-                    break;
+                switch (selection)
+                {
+                    case "torn":
+                        switchData = String.Format("torn/?selections={0}", await GetSelections("torn"));
+                        break;
+                    case "user":
+                        switchData = String.Format("user/?selections={0}", await GetSelections("user"));
+                        break;
+                    case "property":
+                        switchData = String.Format("property/?selections={0}", await GetSelections("property"));
+                        break;
+                    case "faction":
+                        switchData = String.Format("faction/?selections={0}", await GetSelections("faction"));
+                        break;
+                    case "company":
+                        switchData = String.Format("company/?selections={0}", await GetSelections("company"));
+                        break;
+                    case "itemmarket":
+                        switchData = String.Format("itemmarket/?selections={0}", await GetSelections("itemmarket"));
+                        break;
+                    default:
+                        switchData = String.Empty;
+                        break;
+                }
+                return new Uri(String.Format("{0}{1}&key={2}", BaseApiUri, switchData, ApiKey));
             }
-            return new Uri(String.Format("{0}{1}&key={2}",BaseApiUri, switchData, ApiKey));
+            else { return new Uri(String.Empty); }
         }
 
         /// <summary>
