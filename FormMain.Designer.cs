@@ -69,6 +69,7 @@ namespace Torn_Assistant
             this.radioButton3 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.buttonMuseum = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.groupBoxName.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRefresh)).BeginInit();
@@ -390,7 +391,7 @@ namespace Torn_Assistant
             0,
             0,
             0});
-            this.numericUpDownRefresh.Location = new System.Drawing.Point(959, 325);
+            this.numericUpDownRefresh.Location = new System.Drawing.Point(959, 371);
             this.numericUpDownRefresh.Maximum = new decimal(new int[] {
             90,
             0,
@@ -410,7 +411,7 @@ namespace Torn_Assistant
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(906, 327);
+            this.label1.Location = new System.Drawing.Point(906, 373);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(47, 13);
             this.label1.TabIndex = 0;
@@ -528,12 +529,26 @@ namespace Torn_Assistant
             this.radioButton1.UseVisualStyleBackColor = true;
             this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
+            // buttonMuseum
+            // 
+            this.buttonMuseum.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonMuseum.Enabled = false;
+            this.buttonMuseum.Location = new System.Drawing.Point(897, 312);
+            this.buttonMuseum.Name = "buttonMuseum";
+            this.buttonMuseum.Size = new System.Drawing.Size(107, 44);
+            this.buttonMuseum.TabIndex = 11;
+            this.buttonMuseum.TabStop = false;
+            this.buttonMuseum.Text = "Museum";
+            this.buttonMuseum.UseVisualStyleBackColor = true;
+            this.buttonMuseum.Click += new System.EventHandler(this.buttonMuseum_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1016, 447);
+            this.Controls.Add(this.buttonMuseum);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dataGridViewItems);
             this.Controls.Add(this.label1);
@@ -603,6 +618,7 @@ namespace Torn_Assistant
         private System.Windows.Forms.Button buttonGo;
         private System.Windows.Forms.RadioButton radioButton4;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelCompanyFactionProperties;
+        private System.Windows.Forms.Button buttonMuseum;
     }
 }
 

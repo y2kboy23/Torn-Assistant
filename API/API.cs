@@ -158,6 +158,12 @@ namespace Torn_Assistant.API
             return await items.createItemsList(vendorList); 
         }
 
+        public async Task<List<JToken>> GetItemsList()
+        {
+            List<JToken> itemList = populationTornData.apiData.SelectToken("items").Values().ToList<JToken>();
+            return itemList;
+        }
+
         public DateTimeOffset LastUpdated()
         {
             return lastUpdatedTime;
@@ -442,6 +448,11 @@ namespace Torn_Assistant.API
                 bonusTravelItems += Convert.ToInt16(parser.ToString());
             }
             return bonusTravelItems;
+        }
+
+        public int GetPawnshopPointsValue()
+        {
+            return populationTornData.apiData.SelectToken("pawnshop").Value<int>("points_value");
         }
     }
 }

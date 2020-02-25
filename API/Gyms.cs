@@ -10,10 +10,7 @@ namespace Torn_Assistant.API
         List<JToken> totalGyms;
         List<GymDetails> totalGymDetails = new List<GymDetails>();
 
-        public Gyms(List<JToken> gyms)
-        {
-            totalGyms = gyms;
-        }
+        public Gyms(List<JToken> gyms) => (this.totalGyms) = (gyms);
 
         /// <summary>
         /// Returns a List of the best gym for training each attirbute. 

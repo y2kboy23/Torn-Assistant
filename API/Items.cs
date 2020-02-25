@@ -8,11 +8,14 @@ namespace Torn_Assistant.API
 {
     public class Items
     {
-        List<JToken> totalItems { get; set; }
+        public List<JToken> totalItemsList { get; set; }
 
         //Constructor
         public Items(List<JToken> items) => 
-            (this.totalItems) = (items);
+            (this.totalItemsList) = (items);
+
+        //default constructor
+        public Items() { }
 
         /// <summary>
         /// Returns List if List - (True) Vendor Profit, (False) Market Profit
@@ -23,7 +26,7 @@ namespace Torn_Assistant.API
             List<ItemDetails> totalItemDetails = new List<ItemDetails>();
             List<ItemDetails> profit = new List<ItemDetails>();
 
-            foreach (JToken jToken in totalItems)
+            foreach (JToken jToken in totalItemsList)
             {
                 string itemNumber;
                 string itemName;
@@ -74,7 +77,7 @@ namespace Torn_Assistant.API
         }
         public ItemDetails GetItemDetails(string name)
         {
-            JToken item = totalItems.Find(x => x.Value<string>("name") == name);
+            JToken item = totalItemsList.Find(x => x.Value<string>("name") == name);
             JProperty itemProperty = (JProperty)item.Parent;
 
             return new ItemDetails 
@@ -88,7 +91,7 @@ namespace Torn_Assistant.API
                 weapon_type = item.Value<string>("weapon_type"),
                 buy_price = item.Value<double>("buy_price"),
                 sell_price = item.Value<double>("sell_price"),
-                market_valuation = item.Value<double>("market_valuation"),
+                market_valuation = item.Value<double>("market_value"),
                 circulation = item.Value<double>("circulation"),
                 image = item.Value<string>("image"),
                 vendorProfit = item.Value<double>("sell_price") - item.Value<double>("market_valuation"),
@@ -148,7 +151,7 @@ namespace Torn_Assistant.API
         public double cost { get; set; }
         public double quantity { get; set; }
 
-        //default constructor
+        //constructor
         public BazaarDetails(string _itemID, string _itemName, double _vendorProfit, string jtokenBazarrID, string jtokenCost, string jtokenQuantity)
         {
             itemID = Convert.ToDouble(_itemID);
@@ -159,6 +162,9 @@ namespace Torn_Assistant.API
             quantity = Convert.ToDouble(jtokenQuantity);
 
         }
+
+        //default constructor
+        public BazaarDetails() { }
 
     }
 
@@ -183,6 +189,8 @@ namespace Torn_Assistant.API
 
         }
 
+        //default constructor
+        public ItemMarketDetails() { }
     }
 
     public interface IMarketDetails

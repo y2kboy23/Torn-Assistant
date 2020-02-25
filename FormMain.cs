@@ -51,6 +51,7 @@ namespace Torn_Assistant
             buttonGo.Enabled = true;
             buttonCompany.Enabled = true;
             buttonTravel.Enabled = true;
+            buttonMuseum.Enabled = true;
         }
 
         //Gets last API update time and displays to form
@@ -420,6 +421,25 @@ namespace Torn_Assistant
                     )
                 );
             window.Show();
+        }
+
+        private void buttonMuseum_Click(object sender, EventArgs e)
+        {
+            MuseumCollections museumCollection = new MuseumCollections
+            {
+                museum = new Museum
+                {
+                    totalItems = new Items
+                    {
+                        totalItemsList = myAPI.GetItemsList().Result,
+                    },
+                    pointsValue = new Points
+                    {
+                        pointsPrice = myAPI.GetPawnshopPointsValue()
+                    }
+                }
+            };
+            museumCollection.Show();
         }
     }
 }
