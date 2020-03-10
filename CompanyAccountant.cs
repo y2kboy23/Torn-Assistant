@@ -27,15 +27,11 @@ namespace Torn_Assistant
             tableLayoutPanel1.ColumnCount = 2;
             tableLayoutPanel1.AutoSize = true;
 
-            //decimal wages = new decimal();
-            int avg = company.weekly_profit / 7;
-            //List<string> weeklyIncome = new List<string>();
 
+            int avg = company.weekly_profit / 7;
             decimal wages = new decimal();
             foreach (Employee employee in company.employees) { wages += employee.wage; }
-
             decimal netIncomePercent = Convert.ToDecimal((avg - wages - company.advertising_budget)) / Convert.ToDecimal(avg);
-
             int count = 0;
 
             List<string> dailyIncome = new List<string>

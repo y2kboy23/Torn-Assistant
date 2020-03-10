@@ -483,6 +483,8 @@ namespace Torn_Assistant
             // comboBoxItemSelect
             // 
             this.comboBoxItemSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxItemSelect.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.comboBoxItemSelect.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBoxItemSelect.DropDownWidth = 200;
             this.comboBoxItemSelect.Enabled = false;
             this.comboBoxItemSelect.FormattingEnabled = true;

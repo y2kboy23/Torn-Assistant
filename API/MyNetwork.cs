@@ -12,10 +12,11 @@ namespace Torn_Assistant.API
         DateTimeOffset lastUpdateTime;
         private const int interval = 600;
         private uint burst = 0;
+        StringBuilder data = new StringBuilder();
 
         public async Task<string> DownloadString(Uri _uri)
         {
-            string data;
+            data.Clear();
 
             //if first time ran, setup time
             if (lastUpdateTime.CompareTo(DateTimeOffset.Now) < 0) { lastUpdateTime = DateTimeOffset.Now; }
@@ -35,17 +36,18 @@ namespace Torn_Assistant.API
 
             try
             {
-                data = await myClient.DownloadStringTaskAsync(_uri);
+                data.Append(await myClient.DownloadStringTaskAsync(_uri));
                 lastUpdateTime = DateTimeOffset.Now;
             }
             catch { return string.Empty; }
 
-            return data;
+            return data.ToString();
         }
 
         public void Dispose()
         {
             myClient.Dispose();
+            data.Clear();
             GC.SuppressFinalize(this);
         }
 

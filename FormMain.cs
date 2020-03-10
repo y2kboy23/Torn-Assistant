@@ -20,7 +20,6 @@ namespace Torn_Assistant
         {
             InitializeComponent();
             myAPI = new API.API("https://api.torn.com/", File.ReadAllText("apikey.txt"));
-
         }
 
         private async void FormMain_Load(object sender, EventArgs e)
@@ -176,6 +175,7 @@ namespace Torn_Assistant
             dataGridViewItems.DataSource = attacks;
             dataGridViewItems.Columns["timestamp_ended"].Visible = false;
             dataGridViewItems.Columns["respect_gain"].DisplayIndex = 2;
+            dataGridViewItems.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
 
             return;
         }

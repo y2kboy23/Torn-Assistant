@@ -24,56 +24,36 @@ namespace Torn_Assistant.API
         public async Task<List<ItemDetails>> createItemsList(bool vendorList)
         {
             List<ItemDetails> totalItemDetails = new List<ItemDetails>();
-            List<ItemDetails> profit = new List<ItemDetails>();
+            JProperty jProperty;
 
             foreach (JToken jToken in totalItemsList)
             {
-                string itemNumber;
-                string itemName;
-                string itemDescription;
-                string itemEffect;
-                string itemRequirement;
-                string itemType;
-                string itemWeaponType;
-                double itemBuyPrice;
-                double itemSellPrice;
-                double itemMarketValue;
-                double itemCirculation;
-                string itemImage;
-                double vendorProfit;
-                double marketProfit;
-                JProperty jProperty;
-
                 jProperty = (JProperty)jToken.Parent;
-                itemNumber = jProperty.Name;
 
-                itemName = jToken.Value<string>("name");
-                itemDescription = jToken.Value<string>("description");
-                itemEffect = jToken.Value<string>("effect");
-                itemRequirement = jToken.Value<string>("requirement");
-                itemType = jToken.Value<string>("type");
-                itemWeaponType = jToken.Value<string>("weapon_type");
-                itemBuyPrice = jToken.Value<double>("buy_price");
-                itemSellPrice = jToken.Value<double>("sell_price");
-                itemMarketValue = jToken.Value<double>("market_value");
-                itemCirculation = jToken.Value<double>("circulation");
-                itemImage = jToken.Value<string>("image");
-                //Vendor profit - money made selling to vendor
-                vendorProfit = itemSellPrice - itemMarketValue;
-                //Market profit - money made selling to market
-                marketProfit = itemMarketValue - itemBuyPrice;
-
-
-                ItemDetails itemDeatils = new ItemDetails(itemNumber, itemName, itemDescription, itemEffect, itemRequirement, itemType, itemWeaponType, itemBuyPrice, itemSellPrice, itemMarketValue,
-                    itemCirculation, itemImage, vendorProfit, marketProfit);
-                totalItemDetails.Add(itemDeatils);
+                totalItemDetails.Add(new ItemDetails
+                {
+                    itemNumber = jProperty.Name,
+                    name = jToken.Value<string>("name"),
+                    description = jToken.Value<string>("description"),
+                    effect = jToken.Value<string>("effect"),
+                    requirement = jToken.Value<string>("requirement"),
+                    type = jToken.Value<string>("type"),
+                    weapon_type = jToken.Value<string>("weapon_type"),
+                    buy_price = jToken.Value<double>("buy_price"),
+                    sell_price = jToken.Value<double>("sell_price"),
+                    market_valuation = jToken.Value<double>("market_value"),
+                    circulation = jToken.Value<double>("circulation"),
+                    image = jToken.Value<string>("image"),
+                    //Vendor profit - money made selling to vendor
+                    vendorProfit = (jToken.Value<double>("sell_price") - jToken.Value<double>("market_value")),
+                    //Market profit - money made selling to market
+                    marketProfit = (jToken.Value<double>("market_value") - jToken.Value<double>("buy_price"))
+                });
 
             }//end foreach
 
-            if (vendorList) { profit = totalItemDetails.OrderByDescending(o => o.vendorProfit).ToList(); totalItemDetails.Clear(); }
-            else { profit = totalItemDetails.OrderByDescending(o => o.marketProfit).ToList(); totalItemDetails.Clear(); }
-
-            return profit;
+            if (vendorList) { return totalItemDetails.OrderByDescending(o => o.vendorProfit).ToList(); }
+            else { return totalItemDetails.OrderByDescending(o => o.marketProfit).ToList(); }
         }
         public ItemDetails GetItemDetails(string name)
         {
@@ -118,26 +98,7 @@ namespace Torn_Assistant.API
         public double vendorProfit { get; set; }
         public double marketProfit { get; set; }
 
-        //constructor
-        public ItemDetails(string idNumber, string idName, string idDesctription, string idEffect, string idRequirement, string idType, string idWeaponType, double idBuyPrice, double idSellPrice, double idMarketValue,
-            double idCirculation, string idImage, double idVendorProfit, double idMarketProfit)
-        {
-            itemNumber = idNumber;
-            name = idName;
-            description = idDesctription;
-            effect = idEffect;
-            requirement = idRequirement;
-            type = idType;
-            weapon_type = idWeaponType;
-            buy_price = idBuyPrice;
-            sell_price = idSellPrice;
-            market_valuation = idMarketValue;
-            circulation = idCirculation;
-            image = idImage;
-            vendorProfit = idVendorProfit;
-            marketProfit = idMarketProfit;
-        }
-
+        //default constructor
         public ItemDetails() { }
 
     }
@@ -153,15 +114,8 @@ namespace Torn_Assistant.API
 
         //constructor
         public BazaarDetails(string _itemID, string _itemName, double _vendorProfit, string jtokenBazarrID, string jtokenCost, string jtokenQuantity)
-        {
-            itemID = Convert.ToDouble(_itemID);
-            itemName = _itemName;
-            vendorProfit = _vendorProfit;
-            bazaarID = Convert.ToDouble(jtokenBazarrID);
-            cost = Convert.ToDouble(jtokenCost);
-            quantity = Convert.ToDouble(jtokenQuantity);
-
-        }
+        => (this.itemID, this.itemName, this.vendorProfit, this.bazaarID, this.cost, this.quantity) 
+            = (Convert.ToDouble(_itemID), _itemName, _vendorProfit, Convert.ToDouble(jtokenBazarrID), Convert.ToDouble(jtokenCost), Convert.ToDouble(jtokenQuantity));
 
         //default constructor
         public BazaarDetails() { }
@@ -179,15 +133,8 @@ namespace Torn_Assistant.API
 
         //default constructor
         public ItemMarketDetails(string _itemID, string _itemName, double _vendorProfit, string jtokenMarketID, string jtokenCost, string jtokenQuantity)
-        {
-            itemID = Convert.ToDouble(_itemID);
-            itemName = _itemName;
-            vendorProfit = _vendorProfit;
-            itemMarketID = Convert.ToDouble(jtokenMarketID);
-            cost = Convert.ToDouble(jtokenCost);
-            quantity = Convert.ToDouble(jtokenQuantity);
-
-        }
+            => (this.itemID, this.itemName, this.vendorProfit, this.itemMarketID, this.cost, this.quantity)
+            = (Convert.ToDouble(_itemID), _itemName, _vendorProfit, Convert.ToDouble(jtokenMarketID), Convert.ToDouble(jtokenCost), Convert.ToDouble(jtokenQuantity));
 
         //default constructor
         public ItemMarketDetails() { }
@@ -200,6 +147,5 @@ namespace Torn_Assistant.API
         double vendorProfit { get; set; }
         double cost { get; set; }
         double quantity { get; set; }
-
     }
 }

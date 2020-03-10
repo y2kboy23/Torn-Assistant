@@ -222,5 +222,10 @@ namespace Torn_Assistant
                     break;
             }
         }
+
+        private void MuseumCollections_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.Dispose();
+        }
     }
 }

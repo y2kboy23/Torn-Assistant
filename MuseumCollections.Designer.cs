@@ -66,6 +66,7 @@
             this.tableLayoutPanelRight.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanelRight.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanelRight.Location = new System.Drawing.Point(228, 36);
+            this.tableLayoutPanelRight.MinimumSize = new System.Drawing.Size(200, 0);
             this.tableLayoutPanelRight.Name = "tableLayoutPanelRight";
             this.tableLayoutPanelRight.RowCount = 2;
             this.tableLayoutPanelRight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -106,6 +107,7 @@
             this.Controls.Add(this.labelTitle);
             this.Name = "MuseumCollections";
             this.Text = "Museum Collections";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MuseumCollections_FormClosed);
             this.Load += new System.EventHandler(this.MuseumCollections_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

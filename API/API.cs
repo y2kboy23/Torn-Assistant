@@ -124,7 +124,10 @@ namespace Torn_Assistant.API
                 foreach (string value in selections.ToList())
                 {
                     if (value != selections.Last.ToString()) { selectionsString += String.Format("{0},", value); }
-                    else { selectionsString += String.Format("{0}", value); }
+                    else
+                    {
+                        selectionsString += String.Format("{0}", value);
+                    }
                 }
             }
             catch { selectionsString = String.Empty; }
@@ -151,17 +154,14 @@ namespace Torn_Assistant.API
         /// <returns></returns>
         public async Task<List<ItemDetails>> GetItemsList(bool vendorList)
         {
-
-            List<JToken> totalItems = populationTornData.apiData.SelectToken("items").Values().ToList<JToken>();
-            Items items = new Items(totalItems);
+            Items items = new Items { totalItemsList = populationTornData.apiData.SelectToken("items").Values().ToList<JToken>() };
 
             return await items.createItemsList(vendorList); 
         }
 
         public async Task<List<JToken>> GetItemsList()
         {
-            List<JToken> itemList = populationTornData.apiData.SelectToken("items").Values().ToList<JToken>();
-            return itemList;
+            return populationTornData.apiData.SelectToken("items").Values().ToList<JToken>();
         }
 
         public DateTimeOffset LastUpdated()
@@ -431,8 +431,7 @@ namespace Torn_Assistant.API
             {
                 if (token.Value<string>("name").Contains("Travel capacity") == true)
                 {
-                    JToken jToken = token;
-                    bonusTravelItems += jToken.Value<int>("level");
+                    bonusTravelItems += token.Value<int>("level");
                 }
             }
 
