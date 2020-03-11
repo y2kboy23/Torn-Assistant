@@ -15,6 +15,7 @@ namespace Torn_Assistant
         private protected API.API myAPI;
         private protected List<Label> myCompany = new List<Label>();
         private protected List<Label> myFaction = new List<Label>();
+        AutoCompleteStringCollection myCollection = new AutoCompleteStringCollection();
 
         public FormMain()
         {
@@ -137,10 +138,14 @@ namespace Torn_Assistant
                 await UpdateItemView(totalItems);
             }
 
+            
+
             //update dropdown box of items
             BindingList<ItemDetails> itemInfo = new BindingList<ItemDetails>(totalItems.OrderBy(o => o.name).ToList());
+            foreach (ItemDetails itemDetails in itemInfo) { myCollection.Add(itemDetails.name); }
             comboBoxItemSelect.DataSource = itemInfo;
             comboBoxItemSelect.DisplayMember = "name";
+            comboBoxItemSelect.AutoCompleteCustomSource = myCollection;
 
             //Free up memory
             totalItems.Clear();
@@ -297,6 +302,20 @@ namespace Torn_Assistant
 
         private void buttonGo_Click(object sender, EventArgs e)
         {
+            OpenItemDetailsForm();
+        }
+        private void comboBoxItemSelect_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            this.AcceptButton = null;
+            if (e.KeyChar == (char)Keys.Return || e.KeyChar == (char)Keys.Enter)
+            {
+                OpenItemDetailsForm();
+            }
+            else { this.AcceptButton = buttonGo; }
+        }
+
+        private void OpenItemDetailsForm()
+        {
             ItemDetailsForm detailsForm = new ItemDetailsForm();
             detailsForm.UpdateItem(comboBoxItemSelect.SelectedItem);
             detailsForm.Show();
@@ -441,5 +460,7 @@ namespace Torn_Assistant
             };
             museumCollection.Show();
         }
+
+        
     }
 }

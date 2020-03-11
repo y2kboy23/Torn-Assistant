@@ -492,6 +492,7 @@ namespace Torn_Assistant
             this.comboBoxItemSelect.Name = "comboBoxItemSelect";
             this.comboBoxItemSelect.Size = new System.Drawing.Size(121, 21);
             this.comboBoxItemSelect.TabIndex = 0;
+            this.comboBoxItemSelect.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBoxItemSelect_KeyPress);
             // 
             // radioButton3
             // 

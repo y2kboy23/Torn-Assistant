@@ -14,6 +14,7 @@ namespace Torn_Assistant
     public partial class MuseumCollections : Form
     {
         public Museum museum { get; set; }
+        private AutoCompleteStringCollection myCollection = new AutoCompleteStringCollection();
         private List<string> setNames = new List<string>
         {
             "Plushies",
@@ -33,6 +34,8 @@ namespace Torn_Assistant
             ComboBox.ObjectCollection objectCollection = new ComboBox.ObjectCollection(comboBox1);
             objectCollection.Add("Click to Select");
             objectCollection.AddRange(setNames.ToArray());
+            myCollection.AddRange(setNames.ToArray());
+            comboBox1.AutoCompleteCustomSource = myCollection; 
             comboBox1.DataSource = objectCollection;
             comboBox1.DisplayMember = "Click to Select";
         }
@@ -178,6 +181,11 @@ namespace Torn_Assistant
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            UpdateRightHandSideOnEvent();
+        }
+
+        private void UpdateRightHandSideOnEvent()
+        {
             tableLayoutPanelRight.Controls.Clear();
 
             switch (comboBox1.SelectedItem.ToString())
@@ -223,6 +231,16 @@ namespace Torn_Assistant
             }
         }
 
+
+        private void comboBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            this.AcceptButton = null;
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                UpdateRightHandSideOnEvent();
+            }
+            else { }
+        }
         private void MuseumCollections_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.Dispose();
