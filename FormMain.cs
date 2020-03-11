@@ -129,7 +129,7 @@ namespace Torn_Assistant
 
                     await UpdateAttacksView(sortedBAttacks);
                 }
-
+                totalItems = await myAPI.GetItemsList(true);
             }
             else
             {
